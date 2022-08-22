@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+          integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+            integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+            crossorigin=""></script>
+</head>
+<body>
+<!--    <p th:text="'Hello, ' + ${name} + '!'" />-->
+
+<!--    <table>-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th> Latitude </th>-->
+<!--            <th> Longitude </th>-->
+<!--            <th> Attitude </th>-->
+<!--            <th> Heading (deg) </th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--            <tr th:if="${planes.empty}">-->
+<!--                <td colspan="2"> No planes available </td>-->
+<!--            </tr>-->
+<!--            <tr th:each="plane : ${planes}">-->
+<!--                <td><span th:text="${plane.currentPosition().x}"> X </span></td>-->
+<!--                <td><span th:text="${plane.currentPosition().y}"> Y </span></td>-->
+<!--                <td><span th:text="${plane.currentPosition().z}"> Z </span></td>-->
+<!--                <td><span th:text="${plane.heading()}"> HDG </span></td>-->
+<!--            </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+
+    <div id="map" style="height: 800px; width: 100%;"></div>
+
+    <script>
+        var map = L.map('map').setView([50.4711, 19.074666368], 9);
+        L.tileLayer('https://tileserver.memomaps.de/tilegen/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+    </script>
+    <script th:each="plane : ${planes}">
+        L.marker(["[[${plane.currentPosition().y}]]", "[[${plane.currentPosition().x}]]"])
+            .bindTooltip("Speed: [[${plane.speedKmh()}]] km/h, Heading: [[${plane.heading()}]]°")
+            .openTooltip()
+            .addTo(map);
+    </script>
+
+</body>
+</html>
