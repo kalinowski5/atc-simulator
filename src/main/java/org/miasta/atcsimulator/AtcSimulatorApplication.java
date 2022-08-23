@@ -12,9 +12,11 @@ import org.springframework.scheduling.annotation.Scheduled;
 public class AtcSimulatorApplication implements CommandLineRunner {
 
     private final Simulation simulation;
+    private final AirTrafficControlUnit atc;
 
     public AtcSimulatorApplication() {
         simulation = new Simulation();
+        atc = new AirTrafficControlUnit(simulation.planes());
     }
 
     public static void main(String[] args) {
@@ -32,7 +34,7 @@ public class AtcSimulatorApplication implements CommandLineRunner {
 
     @Scheduled(fixedRate = 2000L)
     void controlAirspace() {
-        System.out.println("Airspace is being controlled by ATC."); //@TODO: Implement ATC AI
+        atc.control();
     }
 
     @Bean

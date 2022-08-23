@@ -2,6 +2,7 @@ package org.miasta.atcsimulator;
 
 import org.geotools.geometry.DirectPosition3D;
 import org.geotools.referencing.GeodeticCalculator;
+import org.junit.jupiter.api.Named;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,6 +12,9 @@ import org.opengis.referencing.operation.TransformException;
 
 import java.time.LocalDateTime;
 import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Named.named;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 public class PlaneTests {
 
@@ -112,4 +116,54 @@ public class PlaneTests {
                 )
         );
     }
+
+    @ParameterizedTest(name= "{index}: {0}")
+    @MethodSource("providePlanesWithArrivalStatus")
+    void testPlaneArrivalStatus(
+            boolean hasArrivedToDestination,
+            DirectPosition3D currentPosition,
+            DirectPosition3D destinationPosition
+    ) {
+
+        Plane plane = new Plane("SP-MMA", currentPosition, destinationPosition);
+
+        Assertions.assertEquals(hasArrivedToDestination, plane.hasArrived());
+    }
+
+    private static Stream<Arguments> providePlanesWithArrivalStatus() {
+        return Stream.of(
+                arguments(
+                        named("0 meters", true),
+                        new DirectPosition3D(19.0746663, 50.4711, 1000),
+                        new DirectPosition3D(19.0746663, 50.4711, 1000)
+                ),
+                arguments(
+                        named("575 meters", true),
+                        new DirectPosition3D(19.0746663, 50.4711, 1000),
+                        new DirectPosition3D(19.08, 50.475, 1000)
+                ),
+                arguments(
+                        named("999 meters", true),
+                        new DirectPosition3D(20.00, 70.00, 1000),
+                        new DirectPosition3D(20.01235, 70.0079, 1000)
+                ),
+                arguments(
+                        named("1003 meters", false),
+                        new DirectPosition3D(20.00, 70.00, 1000),
+                        new DirectPosition3D(20.012, 70.008, 1000)
+                ),
+                arguments(
+                        named("14338 meters", false),
+                        new DirectPosition3D(19.0746663, 50.4711, 1000),
+                        new DirectPosition3D(19.0746663, 50.600, 1000)
+                ),
+                arguments(
+                        named("67150 meters", false),
+                        new DirectPosition3D(19.0746663, 50.4711, 1000),
+                        new DirectPosition3D(20.00, 50.600, 1000)
+                )
+        );
+    }
+
+
 }

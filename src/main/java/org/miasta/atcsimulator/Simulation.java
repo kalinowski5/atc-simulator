@@ -42,7 +42,12 @@ public class Simulation {
         this.planes.forEach(plane -> {
             try {
                 plane.move(LocalDateTime.now());
-                System.out.println(plane.callSign() + ": " + plane.currentPosition());
+
+                if (plane.hasArrived()) {
+                    this.planes.remove(plane);
+                    System.out.println(plane.callSign() + " has arrived to it's destination.");
+                }
+
             } catch (TransformException e) {
                 throw new RuntimeException(e);
             }
