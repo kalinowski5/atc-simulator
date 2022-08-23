@@ -15,6 +15,7 @@ public class AirTrafficControlUnit {
 
     public void control()
     {
+        this.planesUnderControl.removeIf(Plane::hasArrived);
         this.planesUnderControl.forEach(this::findBestHeading);
     }
 

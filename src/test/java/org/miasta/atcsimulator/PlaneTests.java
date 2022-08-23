@@ -2,7 +2,6 @@ package org.miasta.atcsimulator;
 
 import org.geotools.geometry.DirectPosition3D;
 import org.geotools.referencing.GeodeticCalculator;
-import org.junit.jupiter.api.Named;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;

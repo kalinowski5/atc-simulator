@@ -91,8 +91,6 @@ public class Plane {
 
         double horizontalDistanceInMeters = calc.getOrthodromicDistance();
 
-        System.out.println(horizontalDistanceInMeters);
-
         return horizontalDistanceInMeters > 4000; //@TODO: Const + real value
 
         //@TODO: check vertical separation
@@ -109,8 +107,6 @@ public class Plane {
         } catch (TransformException e) {
             throw new RuntimeException(e);
         }
-
-        System.out.println(calc.getOrthodromicDistance());
 
         return calc.getOrthodromicDistance() < ONE_THOUSAND_METERS;
     }
