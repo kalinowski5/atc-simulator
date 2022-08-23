@@ -16,7 +16,7 @@ public class PlaneTests {
 
     @Test
     void testHeadingCanBeChanged() {
-        Plane plane = new Plane("SP-MMA", new DirectPosition3D(0, 0, 1000));
+        Plane plane = new Plane("SP-MMA", new DirectPosition3D(0, 0, 1000), new DirectPosition3D(1, 1, 1000));
 
         plane.requestHeading(80);
 
@@ -25,7 +25,7 @@ public class PlaneTests {
 
     @Test
     void testPlaneDoesNotChangePositionWhenMovedFirstTime() throws TransformException {
-        Plane plane = new Plane("SP-MMA", new DirectPosition3D(0, 0, 1000));
+        Plane plane = new Plane("SP-MMA", new DirectPosition3D(0, 0, 1000), new DirectPosition3D(1, 1, 1000));
 
         LocalDateTime now = LocalDateTime.of(2022, 8, 10, 13, 20, 0, 0);
 
@@ -47,7 +47,7 @@ public class PlaneTests {
         GeodeticCalculator calc = new GeodeticCalculator();
         calc.setStartingPosition(originalPosition);
 
-        Plane plane = new Plane("SP-MMA", originalPosition);
+        Plane plane = new Plane("SP-MMA", originalPosition, new DirectPosition3D(10, 10, 1000));
         plane.requestSpeed(currentSpeed);
 
         plane.move(previouslyMovedAt);

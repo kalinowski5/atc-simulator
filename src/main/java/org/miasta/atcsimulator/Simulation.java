@@ -13,10 +13,13 @@ public class Simulation {
 
         this.planes = new ArrayList<>();
 
-        Plane plane1 = new Plane("SP-MMA", new DirectPosition3D(19.074666368, 50.4711, 12000));
-        Plane plane2 = new Plane("SP-DDS", new DirectPosition3D(19.074666368, 50.4711, 13000));
-        Plane plane3 = new Plane("SP-AAA", new DirectPosition3D(19.074666368, 50.4711, 14000));
-        Plane plane4 = new Plane("SP-BBB", new DirectPosition3D(19.074666368, 50.4711, 15000));
+        DirectPosition3D KatowiceAirport = new DirectPosition3D(19.0746663, 50.4711, 1000);
+        DirectPosition3D KrakowAirport = new DirectPosition3D(19.7841635, 50.0733, 900);
+
+        Plane plane1 = new Plane("SP-MMA", KatowiceAirport, KrakowAirport);
+        Plane plane2 = new Plane("SP-DDS", KatowiceAirport, KrakowAirport);
+        Plane plane3 = new Plane("SP-AAA", KrakowAirport, KatowiceAirport);
+        Plane plane4 = new Plane("SP-BBB", KatowiceAirport, KrakowAirport);
 
         plane1.requestHeading((int) (Math.random() * 360));
         plane2.requestHeading((int) (Math.random() * 360));
@@ -34,7 +37,7 @@ public class Simulation {
         planes.add(plane4);
     }
 
-    public void tick(double secondsFromLastTick) {
+    public void tick() {
 
         this.planes.forEach(plane -> {
             try {
@@ -44,9 +47,6 @@ public class Simulation {
                 throw new RuntimeException(e);
             }
         });
-
-//        plane1.isProperlySeparated(plane2); //@TODO
-
     }
 
     public ArrayList<Plane> planes() {

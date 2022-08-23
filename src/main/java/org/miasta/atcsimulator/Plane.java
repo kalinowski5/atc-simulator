@@ -14,15 +14,18 @@ public class Plane {
 
     private DirectPosition3D position;
 
+    private DirectPosition3D destination;
+
     private LocalDateTime lastPositionUpdatedAt;
 
     private int heading; //@TODO: VO
 
     private int speedKmh; // @TODO: VO, @TODO: knots instead of km/h
 
-    public Plane(String callSign, DirectPosition3D position) {
+    public Plane(String callSign, DirectPosition3D currentPosition, DirectPosition3D destination) {
         this.callSign = callSign;
-        this.position = position;
+        this.position = currentPosition;
+        this.destination = destination;
         this.heading = 360;
         this.speedKmh = 0;
     }
