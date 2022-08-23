@@ -100,6 +100,8 @@ public class Plane {
 
     boolean hasArrived()
     {
+        //@TODO: Take altitude into account
+
         GeodeticCalculator calc = new GeodeticCalculator();
         try {
             calc.setStartingPosition(this.currentPosition);

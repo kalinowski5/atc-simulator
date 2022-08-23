@@ -14,7 +14,7 @@ public class Simulation {
         this.planes = new ArrayList<>();
 
         DirectPosition3D KatowiceAirport = new DirectPosition3D(19.0746663, 50.4711, 1000);
-        DirectPosition3D KrakowAirport = new DirectPosition3D(19.7841635, 50.0733, 900);
+        DirectPosition3D KrakowAirport = new DirectPosition3D(19.7841635, 50.0733, 1000);
 
         Plane plane1 = new Plane("SP-MMA", KatowiceAirport, KrakowAirport);
         Plane plane2 = new Plane("SP-DDS", KatowiceAirport, KrakowAirport);
@@ -44,7 +44,7 @@ public class Simulation {
                 plane.move(LocalDateTime.now());
 
                 if (plane.hasArrived()) {
-                    this.planes.remove(plane);
+                    this.planes.remove(plane); //@TODO: Move to "arrived" list
                     System.out.println(plane.callSign() + " has arrived to it's destination.");
                 }
 
