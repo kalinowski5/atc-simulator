@@ -10,6 +10,9 @@ import java.time.LocalDateTime;
 
 public class Plane {
 
+    public static final int MIN_HORIZONTAL_SEPARATION_IN_METERS = 5500; //~3 nautical miles
+    public static final int MIN_VERTICAL_SEPARATION_IN_FEET = 1000; //~300 meters
+
     private static final int ONE_THOUSAND_METERS = 1000;
 
     private final String callSign;
@@ -84,14 +87,20 @@ public class Plane {
         return heading;
     }
 
-    boolean isProperlySeparated(Plane anotherPlane) throws TransformException {
+    boolean isProperlySeparated(Plane anotherPlane) {
+
         GeodeticCalculator calc = new GeodeticCalculator();
-        calc.setStartingPosition(this.currentPosition);
-        calc.setDestinationPosition(anotherPlane.currentPosition);
+
+        try {
+            calc.setStartingPosition(this.currentPosition);
+            calc.setDestinationPosition(anotherPlane.currentPosition);
+        } catch (TransformException e) {
+            throw new RuntimeException(e);
+        }
 
         double horizontalDistanceInMeters = calc.getOrthodromicDistance();
 
-        return horizontalDistanceInMeters > 4000; //@TODO: Const + real value
+        return horizontalDistanceInMeters > MIN_HORIZONTAL_SEPARATION_IN_METERS;
 
         //@TODO: check vertical separation
     }

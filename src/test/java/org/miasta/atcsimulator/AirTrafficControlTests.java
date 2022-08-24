@@ -5,8 +5,6 @@ import org.geotools.referencing.GeodeticCalculator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.opengis.referencing.operation.TransformException;
-import org.opengis.temporal.Instant;
-
 import java.time.*;
 import java.util.ArrayList;
 
@@ -48,8 +46,10 @@ public class AirTrafficControlTests {
             calc.setDestinationPosition(plane2.currentPosition());
 
             System.out.println("Separation: " + (int) calc.getOrthodromicDistance() + "m");
-            Assertions.assertTrue(calc.getOrthodromicDistance() > 4000, "Separation minimum violated: " +calc.getOrthodromicDistance());
-
+            Assertions.assertTrue(
+                    calc.getOrthodromicDistance() > Plane.MIN_HORIZONTAL_SEPARATION_IN_METERS,
+                    "Separation minimum violated: " + calc.getOrthodromicDistance()
+            );
 
             System.out.println(plane1.heading());
             System.out.println(plane2.heading());
